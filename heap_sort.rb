@@ -2,28 +2,17 @@
 #it to follow heap min ordering property
 def heapify!(array)
 	#calculate first non leaf node
-	currentIndex = Math.log2(array.size - 1).floor
+	currentIndex = (array.size / 2) - 1
+	#percolate from top down, starting at first non-leaf node
 	currentIndex = array.size - 1
 	while currentIndex >= 0
-		leftChildIndex = currentIndex * 2 + 1
-		rightChildIndex = currentIndex * 2 + 2
-		#if there is a right child, there has to be a left child
-		swapIndex = currentIndex
-		if rightChildIndex < array.size
-			swapIndex = smallestIndex(array, rightChildIndex, leftChildIndex)
-			swapIndex = smallestIndex(array, swapIndex, currentIndex)
-		elsif leftChildIndex < array.size
-			swapIndex = smallestIndex(array, leftChildIndex, currentIndex)
-		end
-		if swapIndex != currentIndex
-			temp = array[currentIndex]
-			array[currentIndex] = array[swapIndex]
-			array[swapIndex] = temp
-		end
+		adjustHeap!(array, array.size, currentIndex)
 		currentIndex = currentIndex - 1
 	end
 end
+
 #uses heap sort to sort array in descending order
+#in-place
 def heapSort!(array)
 	heapify! array
 	size = array.size
@@ -36,6 +25,8 @@ def heapSort!(array)
 		adjustHeap!(array, size, 0)
 	end
 end
+
+#percolates value down, starting at pos
 def adjustHeap!(array, size, pos)
 	#base case
 	if pos >= size
@@ -68,7 +59,7 @@ def smallestIndex(array, index1, index2)
 end
 
 
-NUM = 50
+NUM = 10
 
 array = NUM.times.map{ Random.rand(100) } 
 puts "Original Array"
