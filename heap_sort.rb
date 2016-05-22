@@ -4,7 +4,6 @@ def heapify!(array)
 	#calculate first non leaf node
 	currentIndex = (array.size / 2) - 1
 	#percolate from top down, starting at first non-leaf node
-	currentIndex = array.size - 1
 	while currentIndex >= 0
 		adjustHeap!(array, array.size, currentIndex)
 		currentIndex = currentIndex - 1
